@@ -1,14 +1,15 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace UDEV.DefenseBasic {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IComponentChecking
     {
         public float atkRate;
         private Animator m_anim;
         private float m_curAtkRate;
         private bool m_isAttacked;
+        private bool m_isDead;
 
         private void Awake()
         {
@@ -21,15 +22,19 @@ namespace UDEV.DefenseBasic {
 
         }
 
+        public bool IsComponentsNull()
+        {
+            return m_anim == null;
+        }
+
         // Update is called once per frame
         void Update()
         {
+            if(IsComponentsNull()) return;
+
             if (Input.GetMouseButtonDown(0) && !m_isAttacked)
             {
-                if (m_anim)
-                {
-                    m_anim.SetBool(Const.ATTACK_ANIM, true);
-                }
+                 m_anim.SetBool(Const.ATTACK_ANIM, true);
                 m_isAttacked = true;
             }
 
@@ -47,11 +52,21 @@ namespace UDEV.DefenseBasic {
 
         public void ResetAtkAnim()
         {
-            if (m_anim)
+            if (IsComponentsNull()) return;
+             m_anim.SetBool(Const.ATTACK_ANIM, false);
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if(IsComponentsNull()) return;
+
+            if (col.CompareTag(Const.ENEMYWEAPON_TAG) && !m_isDead)
             {
-                m_anim.SetBool(Const.ATTACK_ANIM, false);
+                m_anim.SetTrigger(Const.DEAD_ANIM);
+                m_isDead = true;
             }
         }
+
     }
 }
 
