@@ -21,7 +21,7 @@ namespace UDEV.DefenseBasic {
         public const string MUSIC_VOL_PREF = "music_vol";
         public const string SOUND_VOL__PREF = "sound_vol";
 
-
+        public const string GAMEPLAY_SCENE = "Gameplay";
     }
 }
 

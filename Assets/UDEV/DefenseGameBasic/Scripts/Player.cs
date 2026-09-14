@@ -10,11 +10,13 @@ namespace UDEV.DefenseBasic {
         private float m_curAtkRate;
         private bool m_isAttacked;
         private bool m_isDead;
+        private GameManager m_gm;
 
         private void Awake()
         {
             m_anim = GetComponent<Animator>();
             m_curAtkRate = atkRate;
+            m_gm = FindObjectOfType<GameManager>();
         }
         // Start is called before the first frame update
         void Start()
@@ -24,7 +26,7 @@ namespace UDEV.DefenseBasic {
 
         public bool IsComponentsNull()
         {
-            return m_anim == null;
+            return m_anim == null || m_gm == null;
         }
 
         // Update is called once per frame
@@ -56,6 +58,12 @@ namespace UDEV.DefenseBasic {
              m_anim.SetBool(Const.ATTACK_ANIM, false);
         }
 
+        public void PlayAtkSound()
+        {
+            if (m_gm.auCtr)
+                m_gm.auCtr.PlaySound(m_gm.auCtr.playerAtk);
+        }
+
         private void OnTriggerEnter2D(Collider2D col)
         {
             if(IsComponentsNull()) return;
@@ -64,6 +72,8 @@ namespace UDEV.DefenseBasic {
             {
                 m_anim.SetTrigger(Const.DEAD_ANIM);
                 m_isDead = true;
+                gameObject.layer = LayerMask.NameToLayer(Const.DEAD_LAYER);
+                m_gm.Gameover();
             }
         }
 

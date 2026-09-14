@@ -290,4 +290,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  atkDistance: 1.77
+  atkDistance: 1.5
+  minCoinBonus: 5
+  maxCoinBonus: 8
