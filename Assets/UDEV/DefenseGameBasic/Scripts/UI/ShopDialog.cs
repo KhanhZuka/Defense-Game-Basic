@@ -11,22 +11,19 @@ namespace UDEV.DefenseBasic
     {
         public Transform gridRoot;
         public ShopItemUI itemUIPrefab;
-        private ShopManager m_shopMng;
-        private GameManager m_gm;
 
         public override void Show(bool isShow)
         {
             Pref.coins = 10000;
             base.Show(isShow);
-            m_shopMng = FindObjectOfType<ShopManager>();
-            m_gm = FindObjectOfType<GameManager>();
+
 
             UpdateUI();
         }
 
         public bool IsComponentsNull()
         {
-            return m_shopMng == null || m_gm == null;
+            return ShopManager.Ins == null || GameManager.Ins == null;
         }
 
         private void UpdateUI()
@@ -35,7 +32,7 @@ namespace UDEV.DefenseBasic
 
             ClearChilds();
 
-            var items = m_shopMng.items;
+            var items = ShopManager.Ins.items;
 
             if (items == null || items.Length <= 0 || gridRoot == null) return;
 
@@ -85,8 +82,7 @@ namespace UDEV.DefenseBasic
 
                 UpdateUI();
 
-                if (m_gm.guiMng)
-                    m_gm.guiMng.UpdateMainCoins();
+                 GUIManager.Ins.UpdateMainCoins();
             }
             else
             {

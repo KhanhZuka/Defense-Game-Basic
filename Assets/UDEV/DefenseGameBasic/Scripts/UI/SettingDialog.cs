@@ -9,18 +9,15 @@ namespace UDEV.DefenseBasic
     {
         public Slider musicSlider;
         public Slider soundSlider;
-        private AudioController m_auCtr;
 
         public bool IsComponentsNull()
         {
-            return m_auCtr == null || musicSlider == null || soundSlider == null;
+            return AudioController.Ins == null || musicSlider == null || soundSlider == null;
         }
 
         public override void Show(bool isShow)
         {
             base.Show(isShow);
-
-            m_auCtr = FindObjectOfType<AudioController>();
 
             if (IsComponentsNull()) return;
 
@@ -32,8 +29,8 @@ namespace UDEV.DefenseBasic
         {
             if(IsComponentsNull()) return;
 
-            m_auCtr.musicVol = value;
-            m_auCtr.musicAus.volume = value;
+            AudioController.Ins.musicVol = value;
+            AudioController.Ins.musicAus.volume = value;
             Pref.musicVol = value;
         }
 
@@ -41,8 +38,8 @@ namespace UDEV.DefenseBasic
         {
             if (IsComponentsNull()) return;
 
-            m_auCtr.soundVol = value;
-            m_auCtr.soundAus.volume = value;
+            AudioController.Ins.soundVol = value;
+            AudioController.Ins.soundAus.volume = value;
             Pref.soundVol = value;
         }
         

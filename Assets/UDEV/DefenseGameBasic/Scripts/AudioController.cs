@@ -7,7 +7,8 @@ namespace UDEV.DefenseBasic
 {
     public class AudioController : MonoBehaviour
     {
-        
+        public static AudioController Ins;
+
         [Header("Main Setting:")]
         [Range(0f, 1f)]
         public float musicVol = 0.3f;
@@ -22,6 +23,11 @@ namespace UDEV.DefenseBasic
         public AudioClip enemyDead;
         public AudioClip gameover;
         public AudioClip[] bgms;
+
+        private void Awake()
+        {
+            Ins = this;
+        }
 
         private void Start()
         {
